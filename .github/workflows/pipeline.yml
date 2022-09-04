@@ -19,6 +19,10 @@ jobs:
       - name: npm install
         run: npm install
       - name: test
+        env:
+          MONGODB_URI: ${{secrets.MONGODB_URI}}
+          PORT: ${{secrets.PORT}}
+          SECRET: ${{secrets.SECRET}}
         run: npm run test
   Deploy:
     runs-on: ubuntu-20.04
