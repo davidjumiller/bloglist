@@ -37,5 +37,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "limitless-temple-62837"
           heroku_email: "davidjumiller@gmail.com"
-          healthcheck: "https://limitless-temple-62837.herokuapp.com/"
+          healthcheck: "https://limitless-temple-62837.herokuapp.com/health"
           rollbackonhealthcheckfailed: true
