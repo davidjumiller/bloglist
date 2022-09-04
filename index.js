@@ -16,7 +16,7 @@ app.use(cors())
 app.use(express.json())
 
 app.get('/health', async (request, response) => {
-  response.status(200).send('ok')
+  response.send('ok')
 })
 
 app.use('/api/blogs', blogsRouter)
