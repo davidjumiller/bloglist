@@ -18,8 +18,8 @@ jobs:
           node-version: '16'
       - name: npm install
         run: npm install
-      - name: build
-        run: npm run build
+      - name: start
+        run: npm start
       - name: test
         run: npm run test
   Deploy:
@@ -27,7 +27,7 @@ jobs:
     needs: [Build-Test]
     steps:
       - uses: actions/checkout@v3
-      - if: ${{ github.event_name == 'push' }}
+      - if: github.event_name == 'push'
         id: deploy
         name: deploy to heroku
         uses: akhileshns/heroku-deploy@v3.12.12
