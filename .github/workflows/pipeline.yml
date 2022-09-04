@@ -3,9 +3,9 @@ name: Basic CI pipeline
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
-    branches: [master]
+    branches: [main]
     types: [opened, synchronize]
 
 jobs:
@@ -18,16 +18,18 @@ jobs:
           node-version: '16'
       - name: npm install
         run: npm install
-      - name: build
-        run: npm run build
       - name: test
+        env:
+          MONGODB_URI: ${{secrets.MONGODB_URI}}
+          PORT: ${{secrets.PORT}}
+          SECRET: ${{secrets.SECRET}}
         run: npm run test
   Deploy:
     runs-on: ubuntu-20.04
     needs: [Build-Test]
     steps:
       - uses: actions/checkout@v3
-      - if: ${{ github.event_name == 'push' }}
+      - if: github.event_name == 'push'
         id: deploy
         name: deploy to heroku
         uses: akhileshns/heroku-deploy@v3.12.12
@@ -35,3 +37,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "limitless-temple-62837"
           heroku_email: "davidjumiller@gmail.com"
+          healthcheck: "https://limitless-temple-62837.herokuapp.com/"
+          rollbackonhealthcheckfailed: true
